@@ -18,8 +18,24 @@ pw = 'rkdtjdah1#'
 
 driver.implicitly_wait(3)
 
-driver.execute_script("document.getElementsByName('username')[0].value = '{}'".format(id))
-driver.execute_script("document.getElementsByName('password')[0].value = '{}'".format(pw))
+elem = driver.find_element_by_id("username")
+driver.implicitly_wait(3)
+elem.send_keys('yahoo--@hanmail.net')
+elem = driver.find_element_by_id("password")
+elem.send_keys('rkdtjdah1#')
+elem.send_keys(Keys.RETURN)
+
+driver.implicitly_wait(2)
+driver.get('https://www.linkedin.com/search/results/people/?facetGeoRegion=%5B%22kr%3A0%22%5D&keywords=python&origin=FACETED_SEARCH')
+
+
+# driver.find_element_by_class_name('search-result__action-button search-result__actions--primary artdeco-button artdeco-button--default artdeco-button--2 artdeco-button--secondary').click()
+driver.find_element_by_css_selector( '.name actor-name').click()
+
+# driver.execute_script("document.getElementsByName('username')[0].value = '{}'".format(id))
+# driver.execute_script("document.getElementsByName('password')[0].value = '{}'".format(pw))
+
+
 driver.find_element_by_class_name('btn__primary--large from__button--floating').click()
 driver.find_element_by_class_name('fold').click()
 driver.find_element_by_id('mbox_name_b1').click()
@@ -27,7 +43,6 @@ driver.find_element_by_id('mbox_name_b1').click()
 html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 # print(soup.text)
-
 
 
 

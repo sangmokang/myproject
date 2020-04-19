@@ -12,7 +12,7 @@ from parsing_linkedin import parsing_linkedin
 import sqlalchemy
 
 config = ConfigParser.ConfigParser()
-config.read('../db.config')
+config.read('./db.config')
 
 from crawler_assist import crawling_term
 from db_assist import Pg_database
