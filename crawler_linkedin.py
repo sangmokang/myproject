@@ -5,19 +5,19 @@ from bs4 import BeautifulSoup
 import time
 import sys
 import re
-import ConfigParser
+import configparser
 import regex
 from pyvirtualdisplay import Display
 from parsing_linkedin import parsing_linkedin
 import sqlalchemy
 
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read('./db.config')
 
 from crawler_assist import crawling_term
 from db_assist import Pg_database
 
-reload(sys)
+# reload(sys)
 sys.setdefaultencoding('utf-8')
 
 def crawling_linkedin(keywords, area, age, career, page_threshold, sql_con, sql_meta):
@@ -63,7 +63,7 @@ def crawling_linkedin(keywords, area, age, career, page_threshold, sql_con, sql_
             crawling_term(30)
 
             for resume_list in resume_lists:
-                print 'resume_list : ', resume_list.find('a').get('href')
+                print ('resume_list : ', resume_list.find('a').get('href'))
 
             #resume_lists = ['/in/sungeuns2/']
 
@@ -75,8 +75,8 @@ def crawling_linkedin(keywords, area, age, career, page_threshold, sql_con, sql_
                 resume_url = "https://www.linkedin.com{}".format(resume_list)
                 contact_url = "https://www.linkedin.com{}detail/contact-info".format(resume_list)
 
-                print 'resume_url : ', resume_url
-                print 'contact_url : ', contact_url
+                print ('resume_url : ', resume_url)
+                print ('contact_url : ', contact_url)
 
                 crawling_term(50)
                 driver.get(resume_url)
@@ -101,9 +101,9 @@ def crawling_linkedin(keywords, area, age, career, page_threshold, sql_con, sql_
                         #print 'aaaa: ',element
                         try:
                             element.click()
-                            print 'clicked'
+                            print ('clicked')
                         except:
-                            print 'fail click'
+                            print ('fail click')
                             pass
                 """
                 elements = driver.find_element_by_class_name('pv-profile-section__card-action-bar pv-skills-section__additional-skills artdeco-container-card-action-bar').click()
@@ -126,7 +126,7 @@ def crawling_linkedin(keywords, area, age, career, page_threshold, sql_con, sql_
                 crawling_term(100)
 
 
-    drvier.close()
+    driver.close()
     driver.quit()
     return True
 
