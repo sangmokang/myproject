@@ -48,7 +48,9 @@ for element in elements:
     message = '안녕하세요 저는 Tech 영역의 채용 일을 하고 있는 Jeffery 라고 합니다'
     # print(className)
     if 'search-result__actions' in className:
-        # print ('aaaa: ',element)
+
+        # print ('aaaa: ',element)////*[@id="ember70"]/div/div[3]
+        # // *[ @ id = "ember70"] / div / div[3]
         try:
             element.click()
             print('clicked')
@@ -56,10 +58,7 @@ for element in elements:
             driver.implicitly_wait(5)
             driver.find_element_by_xpath(""" //button[@aria-label='1촌 신청 보내기'] """).click()
             time.sleep(random.randint(1, 3))
-            #
-            # if 'artdeco-button--primary' in className:
-            #     element.click()
-            # # element.send_keys(keys.RETURN)
+
         except:
             print('fail click')
             pass
@@ -75,15 +74,8 @@ for i in search_result:
 
 
 
-# driver.find_element_by_class_name('btn__primary--large from__button--floating').click()
 
 
-
-# mailsender = soup.select('td.name a')
-# for mail in mailsender:
-#     print(mail['title'])
-
-
-# driver.close()
+driver.close()
 
 
