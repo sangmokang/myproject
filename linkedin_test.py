@@ -46,7 +46,7 @@ elements = driver.find_elements_by_tag_name('button')
 for element in elements:
     className = element.get_attribute('class')
     print(className)
-    if className == 'search-result__actions':
+    if 'search-result__actions' in className:
         print ('aaaa: ',element)
         try:
             element.click()
