@@ -16,7 +16,7 @@ driver.get('https://www.linkedin.com/')
 driver.implicitly_wait(1.5)
 driver.find_element_by_class_name('nav__button-secondary').click()
 
-driver.implicitly_wait(5)
+driver.implicitly_wait(3)
 
 id = 'yahoo--@hanmail.net'
 driver.implicitly_wait(3)
@@ -25,10 +25,10 @@ pw = 'rkdtjdah1#'
 driver.implicitly_wait(3)
 
 elem = driver.find_element_by_id("username")
-driver.implicitly_wait(3)
-elem.send_keys('yahoo--@hanmail.net')
+driver.implicitly_wait(20)
+elem.send_keys(id)
 elem = driver.find_element_by_id("password")
-elem.send_keys('rkdtjdah1#')
+elem.send_keys(pw)
 elem.send_keys(Keys.RETURN)
 
 driver.implicitly_wait(2)
@@ -45,12 +45,21 @@ elements = driver.find_elements_by_tag_name('button')
 
 for element in elements:
     className = element.get_attribute('class')
-    print(className)
+    message = '안녕하세요 저는 Tech 영역의 채용 일을 하고 있는 Jeffery 라고 합니다'
+    # print(className)
     if 'search-result__actions' in className:
-        print ('aaaa: ',element)
+        # print ('aaaa: ',element)
         try:
             element.click()
             print('clicked')
+            driver.find_element_by_css_selector("#custom-message").send_keys(message)
+            driver.implicitly_wait(5)
+            driver.find_element_by_xpath(""" //button[@aria-label='1촌 신청 보내기'] """).click()
+            time.sleep(random.randint(1, 3))
+            #
+            # if 'artdeco-button--primary' in className:
+            #     element.click()
+            # # element.send_keys(keys.RETURN)
         except:
             print('fail click')
             pass
@@ -75,7 +84,6 @@ for i in search_result:
 #     print(mail['title'])
 
 
-driver.close()
-driver.quit()
+# driver.close()
 
 
