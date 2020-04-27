@@ -40,12 +40,11 @@ sendmails = soup.select('#tdMailList > .listbox tr')
 
 page = 0
 pages = []
-pages = soup.select('.paginate a')
+# pages = soup.select('.paginate a')
+pages = soup.find_all('div', {'id': 'divMainPaging'})
 print(pages)
 
 for i in pages:
-
-    # page += 1
     print(i)
     i.click
 
