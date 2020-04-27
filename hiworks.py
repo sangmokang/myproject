@@ -21,7 +21,7 @@ pw = 'sang9star!!'
 
 driver.execute_script("document.getElementsByName('office_id')[0].value = '{}'".format(id))
 driver.execute_script("document.getElementsByName('office_passwd')[0].value = '{}'".format(pw))
-    driver.find_element_by_class_name('int_jogin').click()
+driver.find_element_by_class_name('int_jogin').click()
 driver.find_element_by_class_name('fold').click()
 driver.find_element_by_id('mbox_name_b1').click()
 
@@ -29,7 +29,7 @@ html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 # print(soup.text)
 
-mailreceipts = soup.select('td.name a')
+mailreceipts = soup.select('td.name span a')
 # mailtitle = soup.select('td.title a')
 # sendtime = soup.select('td.date a')
 # readtime = soup.select('td.date a')
@@ -38,21 +38,54 @@ sendmails = soup.select('#tdMailList > .listbox tr')
 # print(sendmails)
 
 
-page = 1
-pages = soup.select('.paginate')
-# print(pages)
+page = 0
+pages = []
+pages = soup.select('.paginate a')
+print(pages)
 
 for i in pages:
-    page_tag = soup.find_element_by_tag_name('a')
-    print(page_tag)
 
-    page_tag.click()
+    # page += 1
+    print(i)
+    i.click
 
 
+# for i in pages:
+
+    # page_tags = "//*[@id=\"divMainPaging\"]/a["
+    # page_tags += i
+    # page_tags += "]"
+    # i = i + 1
+    # print(page_tags)
+    # driver.find_element_by_xpath(page_tags).click()
+
+    # page_tags = soup.find_element_by_xpath(""" //*[@id ="divMainPaging"]/ a[] """)
+
+# print(page_tags)
+# pages = soup.find_element_by_xpath(""" //*[@class = 'paginate' """)
+# page_tags = pages.find_element_by_xpath(""" //*[@id ="divMainPaging"]/ a[{}] """).format(i)
+
+#
+# for page in pages:
+#     try:
+#         page.find_element_by_xpath(""" //*[@id ="divMainPaging"]/ a[{}] """).format(i)
+#         page.click()
+#         print(page)
+#
+#     except:
+#         pass
+#
+# i = 1
+#
+# for i in pages:
+#     page_tags = soup.find_element_by_queryselector('a')
+#     # page_tags = driver.find_element_by_xpath(""" //*[@id ="divMainPaging"]/ a[" + i + "] """).format(i)
+#     print(page_tags)
+#     page_tags.click()
+#     i = i + 1
 
 
 order = 0
-
 for i in sendmails:
     title_tag = driver.find_element_by_id(i.get('id'))
     title_tag.click()
@@ -125,5 +158,5 @@ for i in sendmails:
 
 
 driver.close()
-self.browser.close()
+driver.quit()
 
