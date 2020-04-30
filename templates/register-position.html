@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>linkedin manager</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <style>
+    .make-center {
+      text-align: center;
+    }
+
+    .star-list {
+      width: 500px;
+      margin: 20px auto 0 auto;
+    }
+
+    .star-name {
+      display: inline-block;
+    }
+
+    .star-name:hover {
+      text-decoration: underline;
+    }
+
+    .card {
+      margin-bottom: 15px;
+    }
+  </style>
+  <script>
+
+    $(document).ready(function () {
+      // index.html 로드가 완료되면 자동으로 show_star() 함수를 호출합니다.
+      show_star();
+    });
+
+    function show_star() {
+      let mockData = [
+      {
+        personal_datum = {
+        'rm_code' : 'null',
+        'name' : 'null',
+        'birth' : '1990',
+        'age' : 0,
+        'gender' : 'null',
+        'mobile' : 'null',
+        'email' : 'null',
+        'address' : 'null',
+        'job_keyword' : 'null',
+        'job_title' : 'null',
+        'educational_history' : 'null',
+        'career_history' : 'null',
+        'career_term' : 'null',
+        'salary_requirement' : 'null',
+        'working_area' : 'null'
+    }
+
+    education_datum = {
+        'edu1_name' : '',
+        'edu1_major' : '',
+        'edu1_term' : '',
+        'edu2_name' : '',
+        'edu2_major' : '',
+        'edu2_term' : '',
+        'edu3_name' : '',
+        'edu3_major' : '',
+        'edu3_term' : ''
+    }
+
+    career_datum = {
+        'career1_name' : '',
+        'career1_duty' : '',
+        'career1_work' : '',
+        'career1_term' : '',
+        'career1_salary' : '',
+        'career2_name' : '',
+        'career2_duty' : '',
+        'career2_work' : '',
+        'career2_term' : '',
+        'career2_salary' : '',
+        'career3_name' : '',
+        'career3_duty' : '',
+        'career3_work' : '',
+        'career3_term' : '',
+        'career3_salary' : '',
+        'career4_name' : '',
+        'career4_duty' : '',
+        'career4_work' : '',
+        'career4_term' : '',
+        'career4_salary' : '',
+        'career5_name' : '',
+        'career5_duty' : '',
+        'career5_work' : '',
+        'career5_term' : '',
+        'career5_salary' : '',
+        'career6_name' : '',
+        'career6_duty' : '',
+        'career6_work' : '',
+        'career6_term' : '',
+        'career6_salary' : '',
+        'career7_name' : '',
+        'career7_duty' : '',
+        'career7_work' : '',
+        'career7_term' : '',
+        'career7_salary' : '',
+        'introduction' : 'intoduction',
+        'career_description' : 'career_description'
+        }
+
+      $.ajax({
+        type: 'GET',
+        url: '/api/list',
+        data: {},
+        success: function (response) {
+          console.log(response)
+          let stars_list = response["stars_list"];
+          for (let i = 0; i < stars_list.length; i++) {
+            let star = stars_list[i];
+            $('#star-box').append(`
+                <div class="card">
+                  <div class="card-content">
+                    <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  src="${star.img_url}"
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+            <div class="media-content">
+              <a href="${star.url}" target="_blank" class="star-name title is-4">${star.name} (좋아요: ${star.like})</a>
+              <p class="subtitle is-6">${star.recent}</p>
+            </div>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <a href="#" onclick="like_star('${star.name}')" class="card-footer-item has-text-info">
+            위로!
+            <span class="icon">
+              <i class="fas fa-thumbs-up"></i>
+            </span>
+          </a>
+          <a href="#" onclick="delete_star('${star.name}')" class="card-footer-item has-text-danger">
+            삭제
+            <span class="icon">
+              <i class="fas fa-ban"></i>
+            </span>
+          </a>
+        </footer>
+      </div>
+      `);
+          }
+          // if (response['result'] == 'success') {
+          // 	let msg = response['msg'];
+          // 	alert(msg);
+        }
+      });
+			  };
+
+
+    function like_star(name) {
+      $.ajax({
+        type: 'PUT',
+        url: '/api/like',
+        data: {
+          "name_give":name,
+        },
+        success: function (response) {
+          if (response['result'] == 'success') {
+            let msg = response['msg'];
+            alert(msg);
+          }
+        }
+      });
+    }
+
+    function delete_star(name) {
+      $.ajax({
+        type: 'DELETE',
+        url: '/api/delete',
+        data: {
+          "name_give":name,
+
+        },
+        success: function (response) {
+          if (response['result'] == 'success') {
+            let msg = response['msg'];
+            alert(msg);
+          }
+        }
+      });
+    }
+
+  </script>
+</head>
+
+<body>
+  <form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Open Date</label>
+    <input type="date" class="form-control" id="exampleFormControlInput1">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Client</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Position title</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Position 상세내용</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">직종</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">직책, 직급</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">나이</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>  <div class="form-group">
+    <label for="exampleFormControlTextarea1">담당컨설턴트</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form>
+
+</body>
+
+</html>

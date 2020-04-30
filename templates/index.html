@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>프론트-백엔드 연결 마지막 예제!</title>
+  <title>linkedin manager</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -31,54 +33,35 @@
     }
   </style>
   <script>
+
     $(document).ready(function () {
       // index.html 로드가 완료되면 자동으로 show_star() 함수를 호출합니다.
-      show_star();
+      show_resume();
     });
 
-    function show_star() {
+    function show_resume() {
       $.ajax({
         type: 'GET',
-        url: '/api/list',
+        url: '/api/resume',
         data: {},
         success: function (response) {
           console.log(response)
-          let stars_list = response["stars_list"];
-          for (let i = 0; i < stars_list.length; i++) {
-            let star = stars_list[i];
-            $('#star-box').append(`
-                <div class="card">
-                  <div class="card-content">
-                    <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48">
-                <img
-                  src="${star.img_url}"
-                  alt="Placeholder image"
-                />
-              </figure>
-            </div>
-            <div class="media-content">
-              <a href="${star.url}" target="_blank" class="star-name title is-4">${star.name} (좋아요: ${star.like})</a>
-              <p class="subtitle is-6">${star.recent}</p>
-            </div>
-          </div>
-        </div>
-        <footer class="card-footer">
-          <a href="#" onclick="like_star('${star.name}')" class="card-footer-item has-text-info">
-            위로!
-            <span class="icon">
-              <i class="fas fa-thumbs-up"></i>
-            </span>
-          </a>
-          <a href="#" onclick="delete_star('${star.name}')" class="card-footer-item has-text-danger">
-            삭제
-            <span class="icon">
-              <i class="fas fa-ban"></i>
-            </span>
-          </a>
-        </footer>
-      </div>
+          let resume_list = response["resume_list"];
+          // 서버가 돌려준 resume_list 를 resume_list 에 저장한다
+          for (let i = 0; i < resume_list.length; i++) {
+            let resume = resume_list[i];
+            $('tbody').append(`
+            <tr>
+              <th scope="row">i</th>
+              <td>${resume.linkedin_name}</td>
+              <td>${resume.profile_title}</td>
+              <td>${resume.profile_summary}</td>
+              <td>${resume.job_title}</td>
+              <td>${resume.total_career_term}</td>
+              <td>${resume.profile_url}</td>
+              <td>${resume.linkedin_profile_pic}</td>
+            </tr>
+      
       `);
           }
           // if (response['result'] == 'success') {
@@ -86,15 +69,46 @@
           // 	alert(msg);
         }
       });
-			  };
-
+    };
+    //   <div class="card">
+    //             <div class="card-content">
+    //               <div class="media">
+    //       <div class="media-left">
+    //         <figure class="image is-48x48">
+    //           <img
+    //             src="${star.img_url}"
+    //             alt="Placeholder image"
+    //           />
+    //         </figure>
+    //       </div>
+    //       <div class="media-content">
+    //         <a href="${star.url}" target="_blank" class="star-name title is-4">${star.name} (좋아요: ${star.like})</a>
+    //         <p class="subtitle is-6">${star.recent}</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <footer class="card-footer">
+    //     <a href="#" onclick="like_star('${star.name}')" class="card-footer-item has-text-info">
+    //       위로!
+    //       <span class="icon">
+    //         <i class="fas fa-thumbs-up"></i>
+    //       </span>
+    //     </a>
+    //     <a href="#" onclick="delete_star('${star.name}')" class="card-footer-item has-text-danger">
+    //       삭제
+    //       <span class="icon">
+    //         <i class="fas fa-ban"></i>
+    //       </span>
+    //     </a>
+    //   </footer>
+    // </div>
 
     function like_star(name) {
       $.ajax({
         type: 'PUT',
         url: '/api/like',
         data: {
-          "name_give":name,
+          "name_give": name,
         },
         success: function (response) {
           if (response['result'] == 'success') {
@@ -110,7 +124,7 @@
         type: 'DELETE',
         url: '/api/delete',
         data: {
-          "name_give":name,
+          "name_give": name,
 
         },
         success: function (response) {
@@ -126,51 +140,104 @@
 </head>
 
 <body>
-  <section class="hero is-warning">
-    <div class="hero-body">
-      <div class="container make-center">
-        <h1 class="title">
-          마이 페이보릿 무비스타😆
-        </h1>
-        <h2 class="subtitle">
-          순위를 매겨봅시다
-        </h2>
-      </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Linkedin Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Resume <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Job Position</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">1촌 신청</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
     </div>
-  </section>
-  <div class="star-list" id="star-box">
-    <!-- <div class="card">
-      <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image is-48x48">
-              <img
-                src="https://search.pstatic.net/common/?src=https%3A%2F%2Fssl.pstatic.net%2Fsstatic%2Fpeople%2Fportrait%2F201807%2F20180731143610623-6213324.jpg&type=u120_150&quality=95"
-                alt="Placeholder image" />
-            </figure>
-          </div>
-          <div class="media-content">
-            <a href="#" target="_blank" class="star-name title is-4">김다미 (좋아요: 3)</a>
-            <p class="subtitle is-6">안녕, 나의 소울메이트(가제)</p>
-          </div>
-        </div>
-      </div>
-      <footer class="card-footer">
-        <a href="#" onclick="like_star('김다미')" class="card-footer-item has-text-info">
-          위로!
-          <span class="icon">
-            <i class="fas fa-thumbs-up"></i>
-          </span>
-        </a>
-        <a href="#" onclick="delete_star('김다미')" class="card-footer-item has-text-danger">
-          삭제
-          <span class="icon">
-            <i class="fas fa-ban"></i>
-          </span>
-        </a>
-      </footer>
-    </div> -->
-  </div>
+  </nav>
+
+  <button type="button" class="btn btn-primary">등록하기</button>
+
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">School</th>
+        <th scope="col">Career</th>
+        <th scope="col">Total Career</th>
+        <th scope="col">KeyWord</th>
+        <th scope="col">Url</th>
+        <th scope="col">Source</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Mark</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Mark</td>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+      </tr>
+    </tbody>
+  </table>
+
+
 </body>
 
 </html>
