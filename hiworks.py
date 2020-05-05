@@ -29,24 +29,99 @@ html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 # print(soup.text)
 
-mailreceipts = soup.select('td.name span a')
-# mailtitle = soup.select('td.title a')
-# sendtime = soup.select('td.date a')
-# readtime = soup.select('td.date a')
-# maillist = [mailreceipt]
+mailrecipient = soup.select('td.name span a')
+mailtitle = soup.select('td.title a')
+sendtime = soup.select('td.date a')
+readtime = soup.select('td.date a')
+# mailbody = soup.select('td.date a')
 sendmails = soup.select('#tdMailList > .listbox tr')
-# print(sendmails)
+# print(sendmails[1].text.strip())
+
+#제목 출력해보기
+# for i in sendmails:
+#     # i.click()
+#     print(i.text)
+#done
+
+#제목을 각각 클릭해보기
+
+i = 0
+a = []
+eachmail = []
+for i in sendmails:
+    eachmail = driver.find_elements_by_css_selector('td.title .in a')
+    # i += 1
+    print(eachmail)
+    # print(eachmail[i].text)
+
+#
+# for i in sendmails:
+#     eachmail = driver.find_element_by_css_selector('td.title .in a')
+#     print(eachmail)
+    # i = i + 1
+    # driver.execute_script("window.history.go(-1)")
+    # print(sendmail.text)
+    # [].click()
+
+# a = []
+# order = 0
+# for sendmail in sendmails:
+#
+#     # title_tag = driver.find_element_by_id(i.get('id'))
+#     title_tag = driver.find_elements_by_css_selector('.title .in a')
+#     # sendmail.title_tag.click()
+#     # print(title_tag)
+#     sendmail.click()
+#     # a.append(title_tag.text)
+#     # print(a)
+#     # title_tag.click()
+#
+#
+#     driver.execute_script("window.history.go(-1)")
+#     order += 1
 
 
-page = 0
-pages = []
-# pages = soup.select('.paginate a')
-pages = soup.find_all('div', {'id': 'divMainPaging'})
-print(pages)
 
-for i in pages:
-    print(i)
-    i.click
+    # inner_html = driver.page_source
+    # inner_soup = BeautifulSoup(html, 'html.parser')
+    # # print(inner_soup)
+    # driver.switch_to.frame('ifMailContent')
+    # # inner_iframe_html = driver.page_source
+    # # inner_iframe_soup = BeautifulSoup(html, 'html.parser')
+    # mailbody = soup.select_one('#divcontent #FrameTable tobody tr td div p')
+    # # switch_to_default_content()
+    # print(mailbody)
+
+
+    # print(i.select_one('.title .in'))
+    # driver.find_element(i.select_one('.title .in')).click()
+
+
+    # mailreceipts = i.select_one('td.name a').text.strip()
+    # mailtitle = i.select_one('td.title a').text.strip()
+    # sendtime = i.select_one('td.date').text.strip()
+    # readtime = i.select_one('tbody td:nth-child(10)').text.strip()
+    # maillist = {"mailreceipts": mailreceipts,
+    #             "mailtitle": mailtitle,
+    #             "sendtime": sendtime,
+    #             "readtime": readtime,
+    #             "mailbody": mailbody,
+    #             }
+
+    # print(i)
+    # print(maillist)
+
+#
+#
+# page = 0
+# pages = []
+# # pages = soup.select('.paginate a')
+# pages = soup.find_all('div', {'id': 'divMainPaging'})
+# print(pages)
+#
+# for i in pages:
+#     print(i)
+#     i.click
 
 
 # for i in pages:
@@ -84,40 +159,6 @@ for i in pages:
 #     i = i + 1
 
 
-order = 0
-for i in sendmails:
-    title_tag = driver.find_element_by_id(i.get('id'))
-    title_tag.click()
-
-    inner_html = driver.page_source
-    inner_soup = BeautifulSoup(html, 'html.parser')
-    # print(inner_soup)
-    driver.switch_to.frame('ifMailContent')
-    # inner_iframe_html = driver.page_source
-    # inner_iframe_soup = BeautifulSoup(html, 'html.parser')
-    mailbody = soup.select_one('#divcontent #FrameTable tobody tr td div p')
-    # switch_to_default_content()
-    print(mailbody)
-
-    driver.execute_script("window.history.go(-1)")
-    order += 1
-    # print(i.select_one('.title .in'))
-    # driver.find_element(i.select_one('.title .in')).click()
-
-
-    mailreceipts = i.select_one('td.name a').text.strip()
-    mailtitle = i.select_one('td.title a').text.strip()
-    sendtime = i.select_one('td.date').text.strip()
-    readtime = i.select_one('tbody td:nth-child(10)').text.strip()
-    maillist = {"mailreceipts": mailreceipts,
-                "mailtitle": mailtitle,
-                "sendtime": sendtime,
-                "readtime": readtime,
-                "mailbody": mailbody,
-                }
-
-    # print(i)
-    print(maillist)
 
 
 #paging 처리
