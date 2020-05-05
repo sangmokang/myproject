@@ -34,8 +34,16 @@ mailtitle = soup.select('td.title a')
 sendtime = soup.select('td.date a')
 readtime = soup.select('td.date a')
 # mailbody = soup.select('td.date a')
-sendmails = soup.select('#tdMailList > .listbox tr')
-# print(sendmails[1].text.strip())
+sendmails = soup.select('#tdMailList > .listbox tr td.title .in a')
+
+print(sendmails[1].text.strip())
+
+i = 0
+for i in sendmails:
+    # eachmail = driver.find_elements_by_css_selector('td.title .in a')
+    # i.click()
+    # # i += 1
+    print(i.text.strip())
 
 #제목 출력해보기
 # for i in sendmails:
@@ -48,11 +56,18 @@ sendmails = soup.select('#tdMailList > .listbox tr')
 i = 0
 a = []
 eachmail = []
-for i in sendmails:
-    eachmail = driver.find_elements_by_css_selector('td.title .in a')
-    # i += 1
-    print(eachmail)
-    # print(eachmail[i].text)
+
+# for eachmail in sendmails:
+#     eachmail = driver.find_elements_by_css_selector('td.title .in a')
+#     print(eachmail)
+# i += 1
+    # print()
+
+# eachmail = []
+# while True:
+#     eachmail = driver.sendmails.find_elements_by_css_selector('td.title .in a')
+#     print(eachmail)
+#     # print(eachmail[i].text)
 
 #
 # for i in sendmails:
