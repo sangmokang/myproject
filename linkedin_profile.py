@@ -51,29 +51,91 @@ linkedin_name = driver.find_element_by_css_selector('.inline.t-24.t-black.t-norm
 friend_level = driver.find_element_by_css_selector('.dist-value').text
 profile_title = driver.find_element_by_css_selector('.mt1.t-18.t-black.t-normal').text
 
+
+# result_set = []
+
+# for value in total_value:
+#
+#     company = driver.find_element_by_css_selector('.pv-entity__secondary-title.t-14.t-black.t-normal') #회사 목록의 리스트
+#     career_period = driver.find_element_by_css_selector(
+#         'pv-entity__date-range.t-14.t-black--light.t-normal')  # 회사별 재지긱간의 리스트
+#     result = {'company': company, 'career_period': career_period}
+#     result_set.append(result)
+
+
+
+
+
 #company 정보 for 문
-companies = driver.find_elements_by_css_selector('.pv-entity__secondary-title.t-14.t-black.t-normal') #회사 목록의 리스트
-career_periods = driver.find_elements_by_css_selector('pv-entity__date-range.t-14.t-black--light.t-normal') #회사별 재지긱간의 리스트
-career_descriptions = driver.find_elements_by_css_selector('pv-entity__extra-details.t-14.t-black--light.ember-view') #회사별 했던 일들의 직무  기술
-career_terms = driver.find_elements_by_css_selector('.t-14.t-black--light.t-normal')
+# companies = driver.find_elements_by_css_selector('.pv-entity__secondary-title.t-14.t-black.t-normal') #회사 목록의 리스트
+# career_periods = driver.find_elements_by_css_selector('pv-entity__date-range.t-14.t-black--light.t-normal') #회사별 재지긱간의 리스트
+# career_descriptions = driver.find_elements_by_css_selector('pv-entity__extra-details.t-14.t-black--light.ember-view') #회사별 했던 일들의 직무  기술
+# career_terms = driver.find_elements_by_css_selector('.t-14.t-black--light.t-normal')
 
-for company in companies:
-    print(company.text)
+#career_dataset = driver.find_elements_by_css_selector('pv-profile-section__section-info.section-info.pv-profile-section__section-info--has-no-more li')
+career_dataset = driver.find_element_by_class_name('pv-profile-section__section-info.section-info.pv-profile-section__section-info--has-no-more')
+# print(career_dataset)
+result = career_dataset.find_elements_by_tag_name('li')
+# career_dataset_dict = {
+#             'companies' : '',
+#             'career_periods' : '',
+#             'career_descriptions' : '',
+#             'career_terms' : '',
+#         }
 
-for career_period in career_periods:
-    print(career_period.text)
+for item in result:
+    companies = item.find_element_by_css_selector('.pv-entity__secondary-title.t-14.t-black.t-normal')
+    career_periods = item.find_element_by_class_name('pv-entity__date-range.t-14.t-black--light.t-normal')  # 회사별 재지긱간의 리스트
+    career_descriptions = item.find_element_by_class_name('pv-entity__extra-details.t-14.t-black--light.ember-view')  # 회사별 했던 일들의 직무  기술
+    career_terms = item.find_element_by_class_name('.t-14.t-black--light.t-normal')
+    career_dataset_dict = {
+        'companies' : companies.text,
+        'career_periods' : career_periods.text,
+        'career_descriptions' : career_descriptions.text,
+        'career_terms' : career_terms.text,
+    }
 
-for career_description in career_descriptions:
-    print(career_description.text)
+    print(career_dataset_dict)
 
-for career_term in career_terms:
-    print(career_term.text)
+    print('roof done')
 
-career_datum = {'company' : company ,
-                 'career_period': career_period,
-                'career_description' : career_description,
-                'career_term' : career_term,
-                }
+#
+# for company in companies:
+#     print(company.text)
+#
+# for career_period in career_periods:
+#     print(career_period.text)
+#
+# for career_description in career_descriptions:
+#     print(career_description.text)
+#
+# for career_term in career_terms:
+#     print(career_term.text)
+#
+# career_datum = {'company' : company,
+#                  'career_period': career_period,
+#                 'career_description' : career_description,
+#                 'career_term' : career_term,
+#                 }
+#
+# try {
+#    db.products.insertMany( [
+#       { item: "card", qty: 15 },
+#       { item: "envelope", qty: 20 },
+#       { item: "stamps" , qty: 30 }
+#    ] );
+# } catch (e) {
+#    print (e);
+# }try {
+#    db.products.insertMany( [
+#       { item: "card", qty: 15 },
+#       { item: "envelope", qty: 20 },
+#       { item: "stamps" , qty: 30 }
+#    ] );
+# } catch (e) {
+#    print (e);
+# }
+
 
 # i = 0
 
@@ -88,7 +150,7 @@ career_datum = {'company' : company ,
 
 # //*[@id="ember1216"]/div[2]/p[2]//*[@id="ember1216"]/div[2]/p[2]
 linkedin_profile_pic = soup.select_one('.profile-photo-edit__edit-btn') #이건 사진
-profile_summary = driver.find_element_by_css_selector('pv-about__summary-text.mt4.t-14.ember-view').text
+# profile_summary = driver.find_element_by_css_selector('pv-about__summary-text.mt4.t-14.ember-view').text
 job_title = driver.find_element_by_css_selector('h3.t-16.t-black.t-bold').text
 
 # career_description = driver.find_elements_by_css_selector('.pv-entity__description.t-14.t-black.t-normal.inline-show-more-text.ember-view').text
@@ -104,24 +166,29 @@ profile_url = driver.current_url
 profile_html = html
 
 
-print(linkedin_name, friend_level, profile_title, companies, profile_summary, job_title, career_terms, )
+# print(linkedin_name, friend_level, profile_title, companies, profile_summary, job_title, career_terms, )
 #
 # #오ㅏ 드디ㅓ ㅇ....
 #
-doc = {
-    'linkedin_name': linkedin_name,
-    'company' : company,
-    'career_datum' : career_datum,
-    'profile_url' : profile_url,
-    'friend_level' : friend_level,
-    'profile_title': profile_title,
-    'profile_summary' : profile_summary,
-    'job_title' : job_title,
-    'career_terms' : career_term,
-    'profile_url': profile_url,
-    'profile_html' : html,
-    'linkedin_profile_pic' : linkedin_profile_pic,
-}
+# doc = {
+#     'linkedin_name': linkedin_name,
+#     'company' : [{'company': '',
+#                   'career_period':'',
+#                   'career_description' : career_description,
+#                   'career_term' : career_term,
+#                   },
+#                  ],
+#     'career_datum' : career_datum,
+#     'profile_url' : profile_url,
+#     'friend_level' : friend_level,
+#     'profile_title': profile_title,
+#     'profile_summary' : profile_summary,
+#     'job_title' : job_title,
+#     'career_terms' : career_term,
+#     'profile_url': profile_url,
+#     'profile_html' : html,
+#     'linkedin_profile_pic' : linkedin_profile_pic,
+# }
 #
 # db.linkedinprofile.insert_one(doc)
 
